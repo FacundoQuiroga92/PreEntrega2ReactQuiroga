@@ -1,22 +1,20 @@
 import React, { useEffect, useState } from 'react'
 import ItemDetail from '../ItemDetail/ItemDetail'
+import { useParams } from 'react-router-dom'
+import getList from '../utils/products'
 
-const ProdDetail = {
-    id:1 ,nombre:"camiseta Boca",detalle:"camiseta titular de Boca Juniors",img:"https://www.digitalsport.com.ar/files/products/616d7c8b743a7-565172-500x500.jpg", precio: 30000
-}
-
-export const ItemDetailContainer = () => {
-    const [data, setData] = useState({})
-
-    useEffect(() => {
-        const getData = new Promise(resolve => {
-            setTimeout(() => {
-                resolve(ProdDetail)
-            }, 2000);
-        })
-        getData.then(res => setData(res))
-    }, [])
     
+
+ export const ItemDetailContainer = () => {
+    const [data, setData] = useState({})
+    const {id} = useParams()
+    useEffect(() => {
+        getList()
+        .then((res)=> setData(res.find((item)=> item.id === parseInt(id))))
+        }, [id]) 
+
+
+
 
 
   return (
